@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sketch Pad</title>
+    <link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap" rel="stylesheet">
+    <style>
+      #frame {
+        width: 918px;
+        height: 918px;
+        margin: auto;
+        background-color: red;
+        border-radius: 9%;
+        display: flex;
+        justify-items: center;
+        flex-direction: column;
+        border: thin solid black;
+        position: relative;
+      }
+      #container {
+        width: 768px;
+        height: 768px;
+        margin: auto;
+        background-color: lightgrey;
+        display: grid;
+        position: relative;
+        border: thin solid black;
+      }
+      .items {
+        border: thin solid white;
+      }
+      .items:hover {
+        background-color: darkgray !important;
+      }
+      #controls {
+        width: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: absolute;
+        bottom: 20px;
+        font-family: 'Kaushan Script', cursive;
+      }
+      label {
+        color: goldenrod;
+        font-size: 25px;
+      }
+      span {
+        width: 20px;
+      }
+      header{
+        color: goldenrod;
+        font-size: 60px;
+        font-family: 'Kaushan Script', cursive;
+        position: absolute;
+        top: 0px;
+        align-self: center;
+        margin-top: -7px;;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="frame">
+        <header>Etch-a-Sketch</header>
+      <div id="container"></div>
+      <div id="controls">
+        <label for="pixels">Pixel Size</label>
+        <span></span>
+        <select name="pixels" id="pixels">
+          <option value="64">Small</option>
+          <option value="32">Medium</option>
+          <option value="16">Large</option>
+        </select>
+        <span></span>
+        <button onclick="changeGrid()">Reset Board</button>
+      </div>
+    </div>
+    <script>
+      const divContainer = document.querySelector("#container");
+
+      let removeGrid = function (itemsNum) {
+        if (divContainer.childElementCount > 0) {
+          divContainer.innerHTML = "";
+        }
+      };
+      let opac = 1;
+      let makeGrid = function (itemsNum) {
+        divContainer.style.gridTemplateColumns = `repeat(${itemsNum}, 1fr)`;
+        divContainer.style.gridTemplateRows = `repeat(${itemsNum}, 1fr)`;
+        for (i = 0; i < itemsNum * itemsNum; i++) {
+          let newItem = document.createElement("div");
+          newItem.classList.add("items");
+
+          // newItem.style.backgroundColor = "yellow";
+          newItem.onmouseover = function () {
+            newItem.style.backgroundColor = "gray";
+          };
+          divContainer.appendChild(newItem);
+        }
+      };
+
+      function changeGrid() {
+        newNum = parseInt(document.getElementById("pixels").value);
+        //newNum = prompt("How wide do you want your grid?");
+        removeGrid();
+        makeGrid(newNum);
+      }
+      changeGrid();
+    </script>
+  </body>
+</html>
